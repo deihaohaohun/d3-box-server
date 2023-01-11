@@ -7,8 +7,8 @@ export class AppController {
   constructor(private readonly bangumiService: BangumiService) {}
 
   @Post('video')
-  getHello(@Body() video: Prisma.VideoCreateInput): string {
-    this.bangumiService.createUser(video);
+  getHello(@Body() video: { document: Prisma.VideoCreateInput }): string {
+    this.bangumiService.createUser(video.document);
     return 'created successfully.';
   }
 }
