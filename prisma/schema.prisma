@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  title    String     @unique
+  cover     String
+  start     DateTime  @default(now())
+  end       DateTime?
+  total     Int
+  current   Int       @default(0)
+  type      Int       // 视频类型: 番剧 (0), 电影 (1), 纪录片 (2) ...
+  historys  History[]
+}
+
+model History {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  when    DateTime  @default(now())
+  video Video   @relation(fields: [videoId], references: [id])
+  videoId String  @db.ObjectId
+}
