@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Video } from '@prisma/client';
 import { VideoService } from './services/video.service';
 
@@ -16,8 +16,16 @@ export class AppController {
     return '创建成功';
   }
 
-  @Get('video')
-  async getVideos(): Promise<Video[]> {
-    return this.bangumiService.getVideos();
+  @Get('video/:state')
+  async getVideos(
+    @Param('state') state: 'ing' | 'done' | 'not',
+  ): Promise<Video[]> {
+    return this.bangumiService.getVideos(state);
+  }
+
+  @Put('video/:id')
+  async addEpisode(@Param('id') id) {
+    await this.bangumiService.addEpisode(id);
+    return true;
   }
 }
