@@ -18,6 +18,18 @@ export class VideoService {
   }
   constructor(private prisma: PrismaService) {}
 
+  finishVideo(id: any) {
+    return this.prisma.video.update({
+      where: {
+        id,
+      },
+      data: {
+        current: -1,
+        end: new Date(),
+      },
+    });
+  }
+
   async createVideo(data: Prisma.VideoCreateInput): Promise<Video> {
     return this.prisma.video.create({
       data,

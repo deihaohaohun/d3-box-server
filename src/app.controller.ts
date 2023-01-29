@@ -28,4 +28,10 @@ export class AppController {
     await this.bangumiService.addEpisode(id);
     return true;
   }
+
+  @Put('video/finish/:id')
+  async finishVideo(@Param('id') id) {
+    await this.bangumiService.finishVideo(id);
+    return true;
+  }
 }
