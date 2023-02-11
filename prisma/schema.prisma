@@ -17,7 +17,7 @@ model Video {
   start     DateTime  @default(now())
   end       DateTime?
   total     Int
-  current   Int       @default(0)
+  current   Int       @default(1)
   type      Int       // 视频类型: 番剧 (0), 电影 (1), 纪录片 (2) ...
   historys  History[]
 }
