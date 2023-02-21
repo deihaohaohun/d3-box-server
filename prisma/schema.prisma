@@ -30,8 +30,16 @@ model History {
 }
 
 model Account {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  title    String @unique
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  title    String    @unique
   account  String
   password String
+  keywords Keyword[]
+}
+
+model Keyword {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  Account   Account? @relation(fields: [accountId], references: [id])
+  accountId String?  @db.ObjectId
 }

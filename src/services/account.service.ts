@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Video, Prisma, Account } from '@prisma/client';
+import { Prisma, Account } from '@prisma/client';
 
 @Injectable()
 export class AccountService {
@@ -39,6 +39,25 @@ export class AccountService {
   }
 
   async getAccounts(): Promise<Account[]> {
-    return this.prisma.account.findMany({});
+    return this.prisma.account.findMany({
+      include: {
+        keywords: true,
+      },
+    });
+  }
+
+  async updateAccountKeywords(id, keywords: Prisma.KeywordCreateInput[]) {
+    return await this.prisma.account.update({
+      where: {
+        id,
+      },
+      data: {
+        keywords: {
+          createMany: {
+            data: keywords,
+          },
+        },
+      },
+    });
   }
 }

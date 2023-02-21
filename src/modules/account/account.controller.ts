@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { Account, Video } from '@prisma/client';
+import { Account, Keyword } from '@prisma/client';
 import { AccountService } from '../../services/account.service';
 
 @Controller('account')
@@ -28,9 +28,15 @@ export class AccountController {
     return true;
   }
 
-  @Put('video/finish/:id')
-  async finishVideo(@Param('id') id) {
-    await this.accountService.finishVideo(id);
+  @Put(':id')
+  async finishVideo(@Param('id') id, @Body() keywords: Keyword[]) {
+    try {
+      await this.accountService.updateAccountKeywords(id, keywords);
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
     return true;
   }
 }
