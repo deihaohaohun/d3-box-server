@@ -4,6 +4,8 @@ import { Video, Prisma } from '@prisma/client';
 
 @Injectable()
 export class VideoService {
+  constructor(private prisma: PrismaService) {}
+
   addEpisode(id: any) {
     return this.prisma.video.update({
       where: {
@@ -16,9 +18,8 @@ export class VideoService {
       },
     });
   }
-  constructor(private prisma: PrismaService) {}
 
-  startVideo(id: any) {
+  startVideo(id: string) {
     return this.prisma.video.update({
       where: {
         id,

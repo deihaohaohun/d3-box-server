@@ -35,7 +35,7 @@ export class AppController {
     return true;
   }
 
-  @Put('video/finish/:id')
+  @Put('video/start/:id')
   async startVideo(@Param('id') id) {
     await this.bangumiService.startVideo(id);
     return true;
