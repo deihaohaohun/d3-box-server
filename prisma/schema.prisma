@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum VideoType {
+  Bangumi
+  Documentary
+  Movie
+}
+
+enum VideoStatus {
+  Doing
+  Todo
+  Done
+}
+
+model Video {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  title      String      @unique
+  cover      String
+  createdAt  DateTime    @default(now())
+  finishedAt DateTime?
+  type       VideoType
+  total      Int
+  current    Int         @default(0)
+  status     VideoStatus @default(Todo)
+}
